@@ -53,7 +53,7 @@ public class UserControlerTest {
 
         ResponseEntity<?> response = userController.registerUser(testUser);
 
-        // DÜZELTİLDİ: getStatusCodeValue() yerine getStatusCode().value() kullanıldı
+
         assertEquals(400, response.getStatusCode().value());
         assertEquals("Hata: Bu email adresi zaten kullanılıyor!", response.getBody());
 
@@ -68,7 +68,7 @@ public class UserControlerTest {
 
         ResponseEntity<?> response = userController.registerUser(testUser);
 
-        // DÜZELTİLDİ
+
         assertEquals(200, response.getStatusCode().value());
         assertEquals("Kayıt güncellendi. Lütfen e-postanıza gönderilen YENİ doğrulama kodunu giriniz.", response.getBody());
 
@@ -83,7 +83,7 @@ public class UserControlerTest {
 
         ResponseEntity<?> response = userController.registerUser(testUser);
 
-        // DÜZELTİLDİ
+
         assertEquals(200, response.getStatusCode().value());
         assertEquals("Kayıt başarılı. Lütfen e-postanıza gönderilen kodu giriniz.", response.getBody());
 

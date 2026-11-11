@@ -33,7 +33,7 @@ public class CartControllerTest {
 
     @BeforeEach
     void setUp() {
-        // Test için sanal bir sepet ürünü hazırlıyoruz
+        // Test için sanal bir sepet ürünü
         sampleCartItem = new CartItem();
         sampleCartItem.setId(1L);
         sampleCartItem.setUserId(99L);
@@ -44,17 +44,14 @@ public class CartControllerTest {
         sampleCartItem.setQuantity(1);
     }
 
-    // ---------------------------------------------------------
-    // YAPISAL TEST (STRUCTURAL TESTING) - BRANCH COVERAGE
-    // ---------------------------------------------------------
 
     @Test
     void addToCart_WhenItemDoesNotExist_ShouldCreateNewItem() {
-        // Hazırlık: Aynı ürün ve aynı boyutta bir ürün sepette yok (null dönüyor)
+        //Aynı ürün ve aynı boyutta bir ürün sepette yok (null dönüyor)
         when(cartItemRepository.findByUserIdAndProductIdAndSize(anyLong(), anyLong(), anyString())).thenReturn(null);
         when(cartItemRepository.save(any(CartItem.class))).thenReturn(sampleCartItem);
 
-        // Aksiyon: Ürünü sepete ekle
+        //Ürünü sepete ekle
         CartItem result = cartController.addToCart(sampleCartItem);
 
         // Doğrulama: Yeni bir satır oluşturulmalı ve adet 1 olmalı
@@ -65,7 +62,7 @@ public class CartControllerTest {
 
     @Test
     void addToCart_WhenItemAlreadyExists_ShouldIncreaseQuantity() {
-        // Hazırlık: Aynı ürün sepette zaten var (Önceki siparişten)
+        // Aynı ürün sepette zaten var (Önceki siparişten)
         CartItem existingItem = new CartItem();
         existingItem.setQuantity(2); // Önceden 2 adet eklenmiş olsun
         existingItem.setPrice(1250.0);
@@ -73,7 +70,7 @@ public class CartControllerTest {
         when(cartItemRepository.findByUserIdAndProductIdAndSize(99L, 101L, "100ML")).thenReturn(existingItem);
         when(cartItemRepository.save(existingItem)).thenReturn(existingItem);
 
-        // Aksiyon: Aynı üründen 1 adet daha sepete ekle
+        //Aynı üründen 1 adet daha sepete ekle
         CartItem result = cartController.addToCart(sampleCartItem);
 
         // Doğrulama: Yeni bir satır açmak YERİNE, önceki satırın miktarını 2 + 1 = 3 yapmalı
@@ -82,17 +79,15 @@ public class CartControllerTest {
         verify(cartItemRepository, times(1)).save(existingItem);
     }
 
-    // ---------------------------------------------------------
-    // İŞLEVSEL TEST (FUNCTIONAL TESTING)
-    // ---------------------------------------------------------
+
 
     @Test
     void getCart_ShouldReturnUserCartItems() {
-        // Hazırlık: Müşterinin sepetinde 2 ürün var
+        //Müşterinin sepetinde 2 ürün var
         List<CartItem> expectedCart = Arrays.asList(sampleCartItem, new CartItem());
         when(cartItemRepository.findByUserId(99L)).thenReturn(expectedCart);
 
-        // Aksiyon: Sepeti getir
+        //Sepeti getir
         List<CartItem> actualCart = cartController.getCart(99L);
 
         // Doğrulama: Gelen ürün sayısı eşleşiyor mu?
@@ -102,7 +97,7 @@ public class CartControllerTest {
 
     @Test
     void clearCart_ShouldDeleteAllUserCartItems() {
-        // Aksiyon: Satın alma işlemi bittikten sonra sepeti temizle
+        //Satın alma işlemi bittikten sonra sepeti temizle
         cartController.clearCart(99L);
 
         // Doğrulama: Sepet temizleme metodunun tam olarak bir kez tetiklendiğini kontrol et

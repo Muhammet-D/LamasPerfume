@@ -32,21 +32,20 @@ public class OrderControllerTest {
     @Mock private YurticiKargoService yurticiKargoService;
     @Mock private EmailService emailService;
 
-    // Burada @InjectMocks kullanmıyoruz, manuel oluşturacağız.
     private OrderController orderController;
 
     private Order sampleOrder;
 
     @BeforeEach
     void setUp() {
-        // 1. Controller'ı constructor (kurucu metot) ile oluşturuyoruz
+
         orderController = new OrderController(orderRepository, cartItemRepository, productRepository);
 
-        // 2. @Autowired ile çalışan servisleri manuel olarak içine enjekte ediyoruz (Zorla bağlıyoruz)
+
         ReflectionTestUtils.setField(orderController, "yurticiKargoService", yurticiKargoService);
         ReflectionTestUtils.setField(orderController, "emailService", emailService);
 
-        // Sanal siparişimizi hazırlıyoruz
+        // Sanal siparişimiz
         sampleOrder = new Order();
         sampleOrder.setId(500L);
         sampleOrder.setOrderCode("LMS-98765");
@@ -61,7 +60,7 @@ public class OrderControllerTest {
         when(orderRepository.findById(500L)).thenReturn(Optional.of(sampleOrder));
         when(orderRepository.save(any(Order.class))).thenReturn(sampleOrder);
 
-        // Aksiyon: Sipariş durumunu "Hazırlanıyor" olarak güncelle
+        //Sipariş durumunu "Hazırlanıyor" olarak güncelle
         ResponseEntity<?> response = orderController.updateOrderStatus(500L, "Hazırlanıyor");
 
         // Doğrulamalar
@@ -69,7 +68,7 @@ public class OrderControllerTest {
         assertEquals("Hazırlanıyor", sampleOrder.getStatus());
         assertEquals("LMS-98765", sampleOrder.getTrackingNumber());
 
-        // Servislerin çağrıldığından emin ol
+
         verify(yurticiKargoService, times(1)).kargoGonderisiOlustur(sampleOrder);
         verify(emailService, times(1)).siparisDurumMailiGonder(
                 eq("ahmet@mail.com"), eq("Ahmet Yılmaz"), eq("LMS-98765"), eq("Hazırlanıyor"));
