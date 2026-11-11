@@ -25,7 +25,7 @@ import java.util.Map;
 @Service
 public class TelegramNotificationService {
 
-    private final String BOT_TOKEN = "8514865268:AAEM3SRXeafL4_pAAzj58NRtOq8_J03xK_0";
+    private final String BOT_TOKEN = "";
     private final List<String> CHAT_IDS = Arrays.asList("1273093409", "6433973622");
 
     @Autowired
