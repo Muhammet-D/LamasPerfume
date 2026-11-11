@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Güvenli Ödeme | Lamas Parfüm</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.0/css/all.min.css"
+          integrity="sha512-ApSLB1Pd3/bZN8fWB/RG9YhN/7bd9Hkf3AGaE2mPfebjrxagjuBtx2GcgdqIlJkUzwylBo61r9Xa9NmgBI0swA=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
+        .payment-container {
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 0 20px;
+            display: flex;
+            gap: 40px;
+            align-items: flex-start;
+        }
+
+        .payment-form-side {
+            flex: 2;
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+
+        .payment-summary-side {
+            flex: 1;
+            background: #F6F1E8;
+            padding: 30px;
+            border-radius: 12px;
+            position: sticky;
+            top: 20px;
+        }
+
+        .payment-title {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 10px;
+            font-family: serif;
+        }
+
+        .payment-subtitle {
+            color: #777;
+            font-size: 14px;
+            margin-bottom: 30px;
+        }
+
+        .card-visual {
+            background: linear-gradient(135deg, #111, #333);
+            border-radius: 15px;
+            padding: 25px;
+            color: white;
+            margin-bottom: 30px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-visual::before {
+            content: '';
+            position: absolute;
+            top: -50px; right: -50px;
+            width: 150px; height: 150px;
+            border-radius: 50%;
+            background: rgba(212, 175, 55, 0.2);
+        }
+
+        .card-chip {
+            width: 45px;
+            height: 30px;
+            background: #D4AF37;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        .card-number-display {
+            font-size: 22px;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+            font-family: monospace;
+        }
+
+        .card-details-display {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            text-transform: uppercase;
+        }
+
+        .payment-btn {
+            width: 100%;
+            padding: 15px;
+            background-color: #D4AF37;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .payment-btn:hover {
+            background-color: #b8962d;
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
+        }
+
+        .secure-badges {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+            color: #999;
+            font-size: 24px;
+        }
+
+        @media (max-width: 900px) {
+            .payment-container {
+                flex-direction: column-reverse;
+            }
+            .payment-form-side, .payment-summary-side {
+                width: 100%;
+            }
+        }
+    </style>
+<link rel="icon" type="image/webp" href="photos/lamas-logo-1.webp"></head>
+
+<body>
+
+<header>
+  <nav class="nav-bar">
+
+    <!-- 1. SOL: Logo -->
+    <div class="lamas-logo-div">
+        <a href="/"><img src="photos/lamas-logo-1.webp" alt="Lamas Logo" class="lamas-logo"></a>
+        <a href="/"><img src="photos/lamas-yazi.webp" alt="Lamas Yazı" class="lamas-yazi"></a>
+    </div>
+
+    <!-- 2. ORTA: Menü Linkleri -->
+    <ul class="nav-bar-ul" id="mobilMenuListesi">
+        <li><a href="/" class="nav-bar-a">Anasayfa</a></li>
+        <span for="" class="navbar-cizgi"></span>
+
+        <li class="dropdown">
+            <a href="kategori.html" class="nav-bar-a">Kategoriler <i class="fa-solid fa-arrow-down" style="font-size: 11px;"></i></a>
+            <ul class="dropdown-menu">
+                <li><a href="renk.html">Renk Serisi</a></li>
+                <li><a href="mix.html">Lamas Mix - Unisex</a></li>
+                <li><a href="deodorant.html">Deodorantlar</a></li>
+                <li><a href="erkek-kadin.html?cinsiyet=Kadın">Kadın Parfümleri</a></li>
+                <li><a href="erkek-kadin.html?cinsiyet=Erkek">Erkek Parfümleri</a></li>
+                <li><a href="vucut.html">Vücut Spreyleri</a></li>
+                <li><a href="koleksiyon.html?filtre=yeni">Yeni Gelenler</a></li>
+
+                <li class="dropdown-submenu">
+                    <a href="oda-kokulari.html">Oda kokuları <i class="fa-solid fa-caret-right" style="float: right; margin-top: 4px;"></i></a>
+                    <ul class="dropdown-menu sub-menu">
+                        <li><a href="cubuk.html">Çubuklu Oda Kokusu</a></li>
+                        <li><a href="sprey.html">Oda Spreyi</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+
+        <span for="" class="navbar-cizgi"></span>
+        <li><a href="koleksiyon.html?filtre=populer" class="nav-bar-a">Çok Satanlar</a></li>
+        <span for="" class="navbar-cizgi"></span>
+        <li><a href="kargotakip.html" class="nav-bar-a">Sipariş Takibi</a></li>
+        <span for="" class="navbar-cizgi"></span>
+        <li><a href="iletisim.html" class="nav-bar-a">İletişim</a></li>
+
+        <!-- MOBİLDE GÖRÜNECEK DİL SEÇİCİ -->
+        <li class="mobil-dil">
+            <div class="dil-secici notranslate" style="padding-left: 20px;">
+                <button onclick="dilDegistir('tr')" class="dil-btn">TR</button>
+                <span class="dil-ayrac">|</span>
+                <button onclick="dilDegistir('en')" class="dil-btn">EN</button>
+            </div>
+        </li>
+    </ul>
+
+    <!-- 3. SAĞ: İkonlar ve Hamburger Menü -->
+    <div class="nav-sag-ikonlar">
+
+        <!-- Arama -->
+        <div class="arama-kapsayici" style="position: relative;">
+            <a href="#" class="nav-bar-a" onclick="window.aramaKutusunuAc(event)">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </a>
+
+            <div id="aramaKutusu" class="arama-kutusu-gizli">
+                <input type="text" id="aramaInput" placeholder="Parfüm, nota veya kategori ara..." onkeyup="window.canliUrunAra()">
+                <div id="aramaSonuclari" class="arama-sonuclari-liste"></div>
+            </div>
+        </div>
+
+        <!-- Favoriler -->
+        <a href="favori.html" class="nav-bar-a" title="Favorilerim">
+            <i class="fa-solid fa-heart"></i>
+        </a>
+
+        <!-- Sepet -->
+        <a href="sepet.html" class="nav-bar-a" style="position: relative;">
+            <i class="fa-solid fa-cart-shopping"></i>
+            <span id="nav-sepet-sayaci" class="sepet-sayaci-stil">0</span>
+        </a>
+
+        <!-- Kullanıcı -->
+        <a href="giris.html" class="nav-bar-a" id="userIconLink"><i class="fa-solid fa-user"></i></a>
+
+        <!-- MASAÜSTÜNDE GÖRÜNECEK DİL SEÇİCİ -->
+        <div class="dil-secici notranslate masaustu-dil">
+            <button onclick="dilDegistir('tr')" class="dil-btn">TR</button>
+            <span class="dil-ayrac">|</span>
+            <button onclick="dilDegistir('en')" class="dil-btn">EN</button>
+        </div>
+
+        <!-- Üç Çizgi İkonu -->
+        <i class="fa-solid fa-bars hamburger-btn" onclick="mobilMenuTetikle()"></i>
+    </div>
+
+</nav>
+</header>
+
+<!-- ÖDEME BÖLÜMÜ -->
+<section style="background-color: #F6F1E8; padding-bottom: 50px;">
+
+    <div style="text-align: center; padding-top: 50px;">
+        <h1 style="font-family: serif; color: #333;"><i class="fa-solid fa-lock" style="color: #D4AF37;"></i> Güvenli Ödeme</h1>
+        <p style="color: #777; margin-top: 10px;">Lütfen kart bilgilerinizi giriniz.</p>
+    </div>
+
+    <div class="payment-container">
+
+        <!-- 1. SOL TARAF: İnteraktif Kredi Kartı Görseli ve Form Alanı -->
+        <div class="payment-form-side">
+            <h3 class="payment-title" style="margin-bottom: 25px;"><i class="fa-regular fa-credit-card" style="color: #D4AF37;"></i> Kart Bilgileri</h3>
+
+            <!-- Canlı Kredi Kartı Görseli -->
+            <div class="card-visual">
+                <div class="card-chip"></div>
+                <div class="card-number-display" id="displayCardNumber">**** **** **** ****</div>
+                <div class="card-details-display">
+                    <span id="displayCardName">KART SAHİBİ</span>
+                    <span id="displayCardDate">AA/YY</span>
+                </div>
+            </div>
+
+            <!-- Lüks Form Kutuları -->
+            <div style="margin-bottom: 20px;">
+                <label style="display: block; font-size: 13px; font-weight: 600; color: #555; margin-bottom: 8px;">Kart Üzerindeki İsim</label>
+                <input type="text" id="cardName" placeholder="Ad Soyad" required
+                       oninput="document.getElementById('displayCardName').innerText = this.value.toUpperCase() || 'KART SAHİBİ';"
+                       style="width: 100%; padding: 15px; border: 1px solid #eaeaea; border-radius: 8px; font-size: 15px; outline: none; background-color: #fafafa; transition: 0.3s; text-transform: uppercase;">
+            </div>
+
+            <div style="margin-bottom: 20px;">
+                <label style="display: block; font-size: 13px; font-weight: 600; color: #555; margin-bottom: 8px;">Kart Numarası</label>
+                <input type="text" id="cardNumber" placeholder="0000 0000 0000 0000" maxlength="16" required
+                       oninput="document.getElementById('displayCardNumber').innerText = this.value || '**** **** **** ****';"
+                       style="width: 100%; padding: 15px; border: 1px solid #eaeaea; border-radius: 8px; font-size: 15px; outline: none; background-color: #fafafa; transition: 0.3s; letter-spacing: 1px;">
+            </div>
+
+            <div style="display: flex; gap: 15px; margin-bottom: 10px;">
+                <div style="flex: 1;">
+                    <label style="display: block; font-size: 13px; font-weight: 600; color: #555; margin-bottom: 8px;">Ay</label>
+                    <input type="text" id="cardMonth" placeholder="05" maxlength="2" required
+                           oninput="document.getElementById('displayCardDate').innerText = (this.value || 'AA') + '/' + (document.getElementById('cardYear').value || 'YY');"
+                           style="width: 100%; padding: 15px; border: 1px solid #eaeaea; border-radius: 8px; font-size: 15px; outline: none; background-color: #fafafa; text-align: center; transition: 0.3s;">
+                </div>
+                <div style="flex: 1;">
+                    <label style="display: block; font-size: 13px; font-weight: 600; color: #555; margin-bottom: 8px;">Yıl</label>
+                    <input type="text" id="cardYear" placeholder="28" maxlength="2" required
+                           oninput="document.getElementById('displayCardDate').innerText = (document.getElementById('cardMonth').value || 'AA') + '/' + (this.value || 'YY');"
+                           style="width: 100%; padding: 15px; border: 1px solid #eaeaea; border-radius: 8px; font-size: 15px; outline: none; background-color: #fafafa; text-align: center; transition: 0.3s;">
+                </div>
+                <div style="flex: 1;">
+                    <label style="display: block; font-size: 13px; font-weight: 600; color: #555; margin-bottom: 8px;">CVV</label>
+                    <input type="password" id="cardCvv" placeholder="***" maxlength="3" required
+                           style="width: 100%; padding: 15px; border: 1px solid #eaeaea; border-radius: 8px; font-size: 15px; outline: none; background-color: #fafafa; text-align: center; transition: 0.3s;">
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. SAĞ TARAF: Sipariş Özeti -->
+        <div class="payment-summary-side">
+            <h3 class="payment-title" style="font-size: 20px; border-bottom: 1px solid #e0d9cc; padding-bottom: 10px;">Son Kontrol</h3>
+            <div style="background-color: #e8f5e9; border: 1px solid #c8e6c9; padding: 10px; border-radius: 8px; margin-bottom: 15px; display: flex; gap: 10px; align-items: center;">
+                <i class="fa-solid fa-mobile-screen-button" style="color: #27ae60; font-size: 20px;"></i>
+                <p style="margin: 0; font-size: 12px; color: #2c3e50;">Ödemenizi tamamlamak için bankanız tarafından cep telefonunuza <b>SMS onay kodu</b> gönderilecektir.</p>
+            </div>
+
+            <div style="margin-top: 20px;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 15px; color: #555; font-size: 15px;">
+                    <span>Ara Toplam</span>
+                    <span id="payAraToplam">0 TL</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 15px; color: #555; font-size: 15px;">
+                    <span>Kargo Ücreti</span>
+                    <span id="payKargo">Ücretsiz</span>
+                </div>
+
+                <div style="display: flex; justify-content: space-between; margin-top: 20px; padding-top: 20px; border-top: 1px solid #ddd; font-size: 22px; font-weight: bold; color: #333;">
+                    <span>Ödenecek Tutar</span>
+                    <span id="payGenelToplam" style="color: #D4AF37;">0 TL</span>
+                </div>
+            </div>
+
+            <div style="margin: 25px 0 15px 0; font-size: 13px; color: #555;">
+                <label style="display: flex; align-items: flex-start; gap: 10px; cursor: pointer;">
+                    <input type="checkbox" id="sozlesmeOnay" required style="width: 18px; height: 18px; accent-color: #D4AF37; margin-top: 2px;">
+                    <span style="line-height: 1.4;"><a href="mesafeli-satis-sozlesmesi.html" target="_blank" style="color: #D4AF37; text-decoration: underline; font-weight: bold;">Mesafeli Satış Sözleşmesi</a>'ni okudum ve onaylıyorum.</span>
+                </label>
+            </div>
+
+            <button type="button" class="payment-btn" id="siparisiTamamlaBtn" onclick="siparisiTamamla(event)">
+                <i class="fa-solid fa-lock" style="margin-right: 8px;"></i> Ödemeyi Tamamla
+            </button>
+            <p style="text-align: center; font-size: 11px; color: #888; margin-top: 10px;">
+                <i class="fa-solid fa-server" style="color: #D4AF37;"></i> Kart bilgileriniz sunucularımızda saklanmaz ve doğrudan bankaya iletilir.
+            </p>
+            <!-- Kuveyt Türk Banka Yönlendirme Alanı (Gizli) -->
+            <div id="kuveytturk-kapsayici" style="display: none;"></div>
+
+            <!-- Güvenli Ödeme ve 3D Secure Rozetleri -->
+            <div class="secure-badges" style="margin-top: 25px; border-top: 1px solid #e0d9cc; padding-top: 20px; display: flex; flex-direction: column; align-items: center; gap: 12px;">
+
+                <!-- Kart Logoları ve 3D Yazısı -->
+                <div style="display: flex; align-items: center; justify-content: center; gap: 15px;">
+                    <i class="fa-brands fa-cc-visa" style="color: #1a1a1a; font-size: 35px;" title="Visa"></i>
+                    <i class="fa-brands fa-cc-mastercard" style="color: #1a1a1a; font-size: 35px;" title="Mastercard"></i>
+                    <!-- FontAwesome Kalkan ve Kilit İkonu ile Garantili 3D Secure Görseli -->
+                    <div style="background: #111; color: #D4AF37; padding: 6px 12px; border-radius: 6px; font-size: 13px; font-weight: bold; display: flex; align-items: center; gap: 6px; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
+                        <i class="fa-solid fa-shield-cat fa-shield-halved"></i> 3D SECURE
+                    </div>
+                </div>
+
+                <!-- Kuveyt Türk Altyapı Bilgilendirme Metni -->
+                <div style="font-size: 12px; color: #666; text-align: center; line-height: 1.4;">
+                    <i class="fa-solid fa-lock" style="color: #27ae60;"></i> <strong style="color: #2c3e50;">Kuveyt Türk</strong> 256-Bit SSL Güvencesiyle Korunmaktadır.
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+<script src="script.js"></script>
+<!-- Google Translate Scriptleri Aktif Edildi -->
+<!-- Google Translate Scriptleri Aktif Edildi -->
+<div id="google_translate_element" style="display:none;"></div>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        // 1. Üst Menü İkonu Kontrolü
+        let aktifKullanici = localStorage.getItem("lamasGirisYapanKullanici");
+        if(aktifKullanici) {
+            document.getElementById("userIconLink").href = "hesabim.html";
+        }
+
+        // 2. Sepet Verilerini Çekip Ekrana Yazma
+        let sepet = JSON.parse(localStorage.getItem("lamasSepet")) || [];
+        if(sepet.length === 0) {
+            alert("Sepetiniz boş. Anasayfaya yönlendiriliyorsunuz.");
+            window.location.href = "/";
+            return;
+        }
+
+        let araToplam = 0;
+        sepet.forEach(item => { araToplam += (item.price * item.quantity); });
+
+        let kargoUcreti = 0;
+        let kargoYazisi = "Ücretsiz";
+        if (araToplam > 0 && araToplam < 900) {
+            kargoUcreti = 50;
+            kargoYazisi = "50 TL";
+        }
+
+        let genelToplam = araToplam + kargoUcreti;
+        document.getElementById('payAraToplam').innerText = araToplam.toLocaleString('tr-TR') + " TL";
+        document.getElementById('payKargo').innerText = kargoYazisi;
+        document.getElementById('payGenelToplam').innerText = genelToplam.toLocaleString('tr-TR') + " TL";
+    });
+
+
+</script>
+<!-- YUKARI ÇIK BUTONU -->
+<button id="yukariCikBtn" class="lamas-up-float" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" title="Yukarı Çık">
+    <i class="fa-solid fa-chevron-up"></i>
+</button></body>
+</html>

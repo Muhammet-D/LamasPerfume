@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ürün Sayfası</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.0/css/all.min.css"
+        integrity="sha512-ApSLB1Pd3/bZN8fWB/RG9YhN/7bd9Hkf3AGaE2mPfebjrxagjuBtx2GcgdqIlJkUzwylBo61r9Xa9NmgBI0swA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tangerine:wght@400;700&display=swap" rel="stylesheet">
+<link rel="icon" type="image/webp" href="photos/lamas-logo-1.webp"></head>
+
+<body>
+
+<header>
+  <nav class="nav-bar">
+
+    <!-- 1. SOL: Logo -->
+    <div class="lamas-logo-div">
+        <a href="/"><img src="photos/lamas-logo-1.webp" alt="Lamas Logo" class="lamas-logo"></a>
+        <a href="/"><img src="photos/lamas-yazi.webp" alt="Lamas Yazı" class="lamas-yazi"></a>
+    </div>
+
+    <!-- 2. ORTA: Menü Linkleri -->
+    <ul class="nav-bar-ul" id="mobilMenuListesi">
+        <li><a href="/" class="nav-bar-a">Anasayfa</a></li>
+        <span for="" class="navbar-cizgi"></span>
+
+        <li class="dropdown">
+            <a href="kategori.html" class="nav-bar-a">Kategoriler <i class="fa-solid fa-arrow-down" style="font-size: 11px;"></i></a>
+            <ul class="dropdown-menu">
+                <li><a href="renk.html">Renk Serisi</a></li>
+                <li><a href="mix.html">Lamas Mix - Unisex</a></li>
+                <li><a href="deodorant.html">Deodorantlar</a></li>
+                <li><a href="erkek-kadin.html?cinsiyet=Kadın">Kadın Parfümleri</a></li>
+                <li><a href="erkek-kadin.html?cinsiyet=Erkek">Erkek Parfümleri</a></li>
+                <li><a href="vucut.html">Vücut Spreyleri</a></li>
+                <li><a href="koleksiyon.html?filtre=yeni">Yeni Gelenler</a></li>
+
+                <li class="dropdown-submenu">
+                    <a href="oda-kokulari.html">Oda kokuları <i class="fa-solid fa-caret-right" style="float: right; margin-top: 4px;"></i></a>
+                    <ul class="dropdown-menu sub-menu">
+                        <li><a href="cubuk.html">Çubuklu Oda Kokusu</a></li>
+                        <li><a href="sprey.html">Oda Spreyi</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+
+        <span for="" class="navbar-cizgi"></span>
+        <li><a href="koleksiyon.html?filtre=populer" class="nav-bar-a">Çok Satanlar</a></li>
+        <span for="" class="navbar-cizgi"></span>
+        <li><a href="kargotakip.html" class="nav-bar-a">Sipariş Takibi</a></li>
+        <span for="" class="navbar-cizgi"></span>
+        <li><a href="iletisim.html" class="nav-bar-a">İletişim</a></li>
+
+        <!-- MOBİLDE GÖRÜNECEK DİL SEÇİCİ -->
+        <li class="mobil-dil">
+            <div class="dil-secici notranslate" style="padding-left: 20px;">
+                <button onclick="dilDegistir('tr')" class="dil-btn">TR</button>
+                <span class="dil-ayrac">|</span>
+                <button onclick="dilDegistir('en')" class="dil-btn">EN</button>
+            </div>
+        </li>
+    </ul>
+
+    <!-- 3. SAĞ: İkonlar ve Hamburger Menü -->
+    <div class="nav-sag-ikonlar">
+
+        <!-- Arama -->
+        <div class="arama-kapsayici" style="position: relative;">
+            <a href="#" class="nav-bar-a" onclick="window.aramaKutusunuAc(event)">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </a>
+
+            <div id="aramaKutusu" class="arama-kutusu-gizli">
+                <input type="text" id="aramaInput" placeholder="Parfüm, nota veya kategori ara..." onkeyup="window.canliUrunAra()">
+                <div id="aramaSonuclari" class="arama-sonuclari-liste"></div>
+            </div>
+        </div>
+
+        <!-- Favoriler -->
+        <a href="favori.html" class="nav-bar-a" title="Favorilerim">
+            <i class="fa-solid fa-heart"></i>
+        </a>
+
+        <!-- Sepet -->
+        <a href="sepet.html" class="nav-bar-a" style="position: relative;">
+            <i class="fa-solid fa-cart-shopping"></i>
+            <span id="nav-sepet-sayaci" class="sepet-sayaci-stil">0</span>
+        </a>
+
+        <!-- Kullanıcı -->
+        <a href="giris.html" class="nav-bar-a" id="userIconLink"><i class="fa-solid fa-user"></i></a>
+
+        <!-- MASAÜSTÜNDE GÖRÜNECEK DİL SEÇİCİ -->
+        <div class="dil-secici notranslate masaustu-dil">
+            <button onclick="dilDegistir('tr')" class="dil-btn">TR</button>
+            <span class="dil-ayrac">|</span>
+            <button onclick="dilDegistir('en')" class="dil-btn">EN</button>
+        </div>
+
+        <!-- Üç Çizgi İkonu -->
+        <i class="fa-solid fa-bars hamburger-btn" onclick="mobilMenuTetikle()"></i>
+    </div>
+
+</nav>
+</header>
+<section class="urun-sayfasi-section">
+    <div class="urun-sayfasi-img">
+        <div style="position: relative; display: inline-flex; justify-content: center; align-items: center; width: 100%;">
+
+            <!-- Zarif Sol Ok -->
+            <button id="solFotoBtn" onclick="fotografDegistir(-1)" onmouseover="this.style.background='#D4AF37'; this.style.color='white'" onmouseout="this.style.background='rgba(255,255,255,0.9)'; this.style.color='#333'" style="position: absolute; left: 10px; z-index: 5; background: rgba(255,255,255,0.9); color: #333; border: none; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; display: none; align-items: center; justify-content: center; font-size: 16px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); transition: all 0.3s ease;">
+                <i class="fa-solid fa-chevron-left"></i>
+            </button>
+
+            <!-- Ana Fotoğraf -->
+            <img src="" id="urun-detay-foto" alt="parfüm resmi" style="transition: opacity 0.3s ease-in-out;">
+
+            <!-- 🌟 YENİ: Galeri İçi Video Oynatıcı (Başlangıçta Gizlidir) -->
+            <video id="urun-detay-video" autoplay loop muted playsinline
+                   style="display: none;border-radius:40px; width: 100%; transition: opacity 0.3s ease-in-out; object-fit: cover;"></video>
+
+            <!-- Zarif Sağ Ok -->
+            <button id="sagFotoBtn" onclick="fotografDegistir(1)" onmouseover="this.style.background='#D4AF37'; this.style.color='white'" onmouseout="this.style.background='rgba(255,255,255,0.9)'; this.style.color='#333'" style="position: absolute; right: 10px; z-index: 5; background: rgba(255,255,255,0.9); color: #333; border: none; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; display: none; align-items: center; justify-content: center; font-size: 16px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); transition: all 0.3s ease;">
+                <i class="fa-solid fa-chevron-right"></i>
+            </button>
+
+        </div>
+    </div>
+
+        <div class="urun-sayfasi-sag">
+
+            <h1 style="font-size: 39px; margin-top:50px; margin-bottom:40px;" id="urun-baslik" data-orijinal-resim=""></h1>
+            <div class="fiyat-beden-kapsayici notranslate" >
+                <!-- Fiyat (Üstte kalmaya devam ediyor) -->
+                <h3 style="margin: 5px 0; font-size: 23px; background-color: #D4AF37;border-radius: 30px; height: 30px; width: 90px;display: flex; justify-content: center; align-items: center;" id="urun-fiyat"></h3>
+
+                <!-- Size Kısmı (Altta kalmaya devam ediyor) -->
+                <div class="size-div" style="margin-bottom: 20px;">
+                    <p style="font-size: 13px; margin-bottom: 5px; margin-left: 10px;">Size</p>
+                    <div id="beden-secenekleri" style="display: flex; gap: 5px;"></div>
+                </div>
+            </div>
+
+
+            <!-- Sayaç Yapısı -->
+            <div style="display: flex;align-items: center; gap: 20px;">
+                <div class="sayac-kutusu">
+                    <button class="sayac-butonu" onclick="azalt(1)">-</button>
+                    <span class="sayac-degeri" id="sayac">1</span>
+                    <button class="sayac-butonu" onclick="arttir(+1)">+</button>
+                </div>
+
+                <div>
+                    <button class="add-cart-btn">Sepete Ekle</button>
+
+                </div>
+                <div>
+                    <button id="urun-fav-btn" type="button" onclick="window.yeniFavoriIslemi(event, this)"
+                            style="background: #F6F1E8; border: 1px solid #ddd; border-radius: 5px; width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
+                        <i class="fa-regular fa-heart" style="color: #777; font-size: 20px;"></i>
+                    </button>
+                </div>
+            </div>
+
+            <a href="#" class="buy-btn" style="margin-top: 15px;">Hemen Satın Al</a>
+            <div style="display: flex; gap: 60px; margin-left: 30px; margin-top: 25px; margin-bottom: 30px;">
+                <p>900₺ ve Üzeri Ücretsiz Kargo</p>
+                <p>14 Gün İçerisinde İade</p>
+            </div>
+
+            <div class="four-box-div">
+                <div class="urun-box-div">
+                    <p>Yüksek Kalıcılık Garantisi</p>
+                </div>
+                <div class="urun-box-div">
+                    <p>Dogal Özgün Esanslar</p>
+                </div>
+                <div class="urun-box-div">
+                    <p>Özel Lüks Tasarım</p>
+                </div>
+                <div class="urun-box-div">
+                    <p>Hızlı Güvenli Teslimat</p>
+                </div>
+            </div>
+
+            <div class="accordion-container">
+
+                <!-- 1. Akordiyon Sekmesi -->
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <h3>Ürün Açıklaması</h3>
+                        <span class="accordion-icon">+</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p id="akordiyon-aciklama"></p>
+                    </div>
+                </div>
+
+                <!-- 2. Akordiyon Sekmesi -->
+                <div class="accordion-item" id="notalar-sekmesi" style="display: none;">
+                    <div class="accordion-header">
+                        <h3>Notalar & İçerik</h3>
+                        <span class="accordion-icon">+</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p><strong>Üst Notalar:</strong> Bergamot, Kırmızı Meyveler<br>
+                            <strong>Orta Notalar:</strong> Yasemin, Türk Gülü<br>
+                            <strong>Alt Notalar:</strong> Amber, Vanilya, Oud
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 3. Akordiyon Sekmesi -->
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <h3>Kullanım Önerisi</h3>
+                        <span class="accordion-icon">+</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p id="kullanim-onerisi-metni"></p>
+                    </div>
+                </div>
+
+                 <!-- 4. Akordiyon Sekmesi -->
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <h3>İade Koşulu</h3>
+                        <span class="accordion-icon">+</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p>Jelatin açılmadığı sürece 14 gün boyunca iade hakkınız bulunmaktadır.</p>
+                    </div>
+                </div>
+
+            </div>
+            <div style="display: flex; gap: 50px; justify-content: center; align-items: center; margin-bottom: 30px;">
+                <a class="socialContainer containerFour" href="https://wa.me/905511304306" style="width: 200px;">
+                    <svg viewBox="0 0 16 16" class="socialSvg whatsappSvg">
+                        <path
+                            d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z">
+                        </path>
+                    </svg>
+                </a>
+                <a class="socialContainer containerOne" href="https://www.instagram.com/lamasperfume" style="width: 200px;">
+                    <svg viewBox="0 0 16 16" class="socialSvg instagramSvg">
+                        <path
+                            d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.917 3.917 0 0 0-1.417.923A3.927 3.927 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.916 3.916 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.926 3.926 0 0 0-.923-1.417A3.911 3.911 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0h.003zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599.28.28.453.546.598.92.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.47 2.47 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.478 2.478 0 0 1-.92-.598 2.48 2.48 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233 0-2.136.008-2.388.046-3.231.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92.28-.28.546-.453.92-.598.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045v.002zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92zm-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217zm0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334z">
+                        </path>
+                    </svg>
+                </a>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- BENZER ÜRÜNLER (CROSS-SELL) BÖLÜMÜ (SLIDER VERSİYONU) -->
+    <section class="related-products-section" style="background-color: #F6F1E8; padding: 60px 20px; border-top: 1px solid #eee;">
+        <div class="related-container" style="max-width: 1000px; margin: 0 auto;">
+
+            <div style="text-align: center; margin-bottom: 40px;">
+                <h2 style="font-family: serif; font-size: 28px; color: #111; margin-bottom: 10px;">Bunlar da İlginizi Çekebilir</h2>
+                <div style="width: 50px; height: 3px; background: #D4AF37; margin: 0 auto;"></div>
+            </div>
+
+            <!-- Okların ve Slider'ın Bulunduğu Ana Kutu -->
+            <div style="position: relative; display: flex; align-items: center;">
+
+                <!-- Sol Ok (Başlangıçta gizli) -->
+                <button id="prevRelatedBtn" style="position: absolute; left: -50px; z-index: 2; background: transparent; border: none; font-size: 30px; color: #D4AF37; cursor: pointer; display: none; transition: transform 0.3s;"><i class="fa-solid fa-chevron-left"></i></button>
+
+                <!-- Kartların Kayacağı Gizli Çerçeve -->
+                <div id="benzer-urunler-kutusu" style="display: flex; gap: 20px; overflow: hidden; scroll-behavior: smooth; width: 100%; padding: 15px 0;">
+                    <!-- Yükleniyor animasyonu -->
+                    <div style="width: 100%; text-align: center; padding: 40px; color: #D4AF37;">
+                        <i class="fa-solid fa-spinner fa-spin fa-2x"></i>
+                    </div>
+                </div>
+
+                <!-- Sağ Ok (Başlangıçta gizli) -->
+                <button id="nextRelatedBtn" style="position: absolute; right: -50px; z-index: 2; background: transparent; border: none; font-size: 30px; color: #D4AF37; cursor: pointer; display: none; transition: transform 0.3s;"><i class="fa-solid fa-chevron-right"></i></button>
+            </div>
+
+        </div>
+    </section>
+    <!-- Yorumlar Bölümü -->
+<section class="comments-section">
+    <div class="comments-container">
+        
+        <h3 class="comments-title">Müşteri Yorumları (2)</h3>
+
+        <!-- Yorum Ekleme Formu -->
+        <form class="comment-form" id="commentForm">
+            
+            <!-- YENİ: Yıldız Seçme Alanı -->
+            <div class="form-group rating-group">
+                <span class="rating-label">Puanınız:</span>
+                <div class="rating-input" id="ratingInput">
+                    <span class="star active" data-value="1">★</span>
+                    <span class="star active" data-value="2">★</span>
+                    <span class="star active" data-value="3">★</span>
+                    <span class="star active" data-value="4">★</span>
+                    <span class="star active" data-value="5">★</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <input type="text" id="commentName" placeholder="Adınız Soyadınız" required>
+            </div>
+            <div class="form-group">
+                <textarea id="commentText" rows="4" placeholder="Ürün hakkındaki düşüncelerinizi paylaşın..." required></textarea>
+            </div>
+            <button type="submit" class="submit-comment-btn">Yorum Yap</button>
+        </form>
+
+        <!-- Mevcut Yorumlar Listesi -->
+        <div class="comments-list" id="commentsList">
+            
+            <!-- Örnek Yorum 1 -->
+            <div class="comment-item">
+                <div class="comment-header">
+                    <div class="comment-author">
+                        <span class="avatar">A</span>
+                        <div class="author-info">
+                            <strong>Ayşe K.</strong>
+                            <!-- YENİ: Yorumdaki Yıldızlar -->
+                            <div class="comment-stars">
+                                <span class="star filled">★</span>
+                                <span class="star filled">★</span>
+                                <span class="star filled">★</span>
+                                <span class="star filled">★</span>
+                                <span class="star filled">★</span>
+                            </div>
+                        </div>
+                    </div>
+                    <span class="comment-date">12 Ekim 2026</span>
+                </div>
+                <div class="comment-body">
+                    <p>Kokusu gerçekten muazzam. Gün boyu tenimde kaldı, özellikle sonradan açılan odunsu notalara bayıldım.</p>
+                </div>
+            </div>
+
+            <!-- Örnek Yorum 2 -->
+            <div class="comment-item">
+                <div class="comment-header">
+                    <div class="comment-author">
+                        <span class="avatar">B</span>
+                        <div class="author-info">
+                            <strong>Burak Y.</strong>
+                            <div class="comment-stars">
+                                <span class="star filled">★</span>
+                                <span class="star filled">★</span>
+                                <span class="star filled">★</span>
+                                <span class="star filled">★</span>
+                                <span class="star">★</span> <!-- Bu 4 yıldızlı bir yorum (Son yıldız boş) -->
+                            </div>
+                        </div>
+                    </div>
+                    <span class="comment-date">5 Ekim 2026</span>
+                </div>
+                <div class="comment-body">
+                    <p>Kargolama çok özenliydi. Koku oldukça lüks hissettiriyor, kesinlikle imza parfümüm olacak.</p>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+ <!-- ========================================== -->
+ <!-- YENİ EKLENEN: GOOGLE YORUMLARI BÖLÜMÜ      -->
+ <!-- ========================================== -->
+ <section style="margin-top: 80px; margin-bottom: 60px;">
+     <div class="cat-h2-div">
+         <!-- Satır içi stilleri sildik, id ekledik -->
+         <h2 class="cat-h2" id="yorumlarBaslik">Müşterilerimiz Neler Söyledi?</h2>
+     </div>
+
+     <!-- Kenarlardan boşluk vermesi için class ekledik -->
+     <div class="yorumlar-kapsayici">
+         <div style="width: 100%;">
+             <!-- SENİN KODUN AYNEN BURADA -->
+             <script src="https://elfsightcdn.com/platform.js" async></script>
+            <div class="elfsight-app-c498cbaf-4547-4e3a-8224-aae8c1cd62e6" data-elfsight-app-lazy></div>
+         </div>
+     </div>
+ </section>
+ <!-- ========================================== -->
+
+<footer>
+    <div class="footer-info">
+        <div class="infolar-div">
+            <h2 class="info-logo-h2"><i class="fa-solid fa-truck"></i></h2>
+            <h2 class="info-logo-h2" style="font-size: 25px;">Hızlı Teslimat</h2>
+            <p class="info-logo-p">2 İş Günü İçerisinde Kargoya Teslim</p>
+        </div>
+        <div class="infolar-div">
+            <h2 class="info-logo-h2"><i class="fa-solid fa-credit-card"></i></h2>
+            <h2 class="info-logo-h2" style="font-size: 25px;">Güvenli Alışveriş</h2>
+            <p class="info-logo-p">Kredi Kartı Bilgileriniz Güvence Altındadır.</p>
+        </div>
+        <div class="infolar-div">
+            <h2 class="info-logo-h2"><i class="fa-solid fa-circle-left"></i></h2>
+            <h2 class="info-logo-h2" style="font-size: 25px;">İade Hakkı</h2>
+            <p class="info-logo-p">14 İş Günü İçerisinde İade.</p>
+        </div>
+        <div class="infolar-div">
+            <h2 class="info-logo-h2"><i class="fa-solid fa-coins"></i></h2>
+            <h2 class="info-logo-h2" style="font-size: 25px;">Ücretsiz Kargo</h2>
+            <p class="info-logo-p">900TL ve Üzeri Alışverişlerde.</p>
+        </div>
+    </div>
+
+    <div class="footer-main">
+        <div class="footer-social">
+            <img src="photos/lamas-logo-1.webp" alt="Lamas Parfüm">
+            <div class="card">
+                <!-- Sosyal Medya Linklerini Buraya Ekleyebilirsin -->
+                <a class="socialContainer containerOne" href="https://www.instagram.com/lamasperfume" target="_blank">
+                    <svg viewBox="0 0 16 16" class="socialSvg instagramSvg"><path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.917 3.917 0 0 0-1.417.923A3.927 3.927 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.916 3.916 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.926 3.926 0 0 0-.923-1.417A3.911 3.911 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0h.003zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599.28.28.453.546.598.92.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.47 2.47 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.478 2.478 0 0 1-.92-.598 2.48 2.48 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233 0-2.136.008-2.388.046-3.231.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92.28-.28.546-.453.92-.598.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045v.002zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92zm-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217zm0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334z"></path></svg>
+                </a>
+
+                <a class="socialContainer containerFour" href="https://wa.me/905511304306" target="_blank">
+                    <svg viewBox="0 0 16 16" class="socialSvg whatsappSvg"><path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"></path></svg>
+                </a>
+            </div>
+        </div>
+
+        <div class="footer-right-info">
+            <div class="kurumsal-div">
+                <h3>Kurumsal</h3>
+                <ul>
+                    <li><a href="hakkimizda.html">Hakkımızda</a></li>
+                    <li><a href="iletisim.html">İletişim</a></li>
+                    <li><a href="blog.html">Blog</a>
+                     <li><a href="gizlilik.html">Gizlilik Politikası</a>
+<li><a href="mesafeli-satis-sozlesmesi.html">Mesafeli Satış Sözleşmesi</a></li>
+                </ul>
+            </div>
+            <div class="kurumsal-div">
+                <h3>Müşteri Hizmetleri</h3>
+                <ul>
+                    <li><a href="kargotakip.html">Sipariş Takibi</a></li>
+                    <li><a href="iade.html">İade & Değişim</a></li>
+                    <li><a href="sss.html">Sık Sorulan Sorular</a></li>
+                    <li><a href="kargo.html">Kargo Bilgileri</a></li>
+                </ul>
+            </div>
+            <div class="kurumsal-div">
+                <h3>Hesabım</h3>
+                <ul>
+                    <li><a href="giris.html">Giriş Yap</a></li>
+                    <li><a href="kaydol.html">Kaydol</a></li>
+                    <li><a href="favori.html">Favorilerim</a></li>
+                    <li><a href="hesabim.html">Siparişlerim</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-map">
+             <div style="width: 400px; height: 280px; overflow: hidden; border: 1px solid #ccc;">
+
+                <!-- Haritayı -50px yukarı kaydırarak siyah barı dışarıda bırakıyoruz -->
+                <iframe
+                        src="https://www.google.com/maps/d/u/0/embed?mid=1TGSi4F6HOKBUo449cA4rkJAwBDehyuw&ehbc=2E312F"
+                        width="400"
+                        height="350"
+                        style="margin-top: -70px; border: none;">
+                </iframe>
+
+            </div>
+            <div>
+                <p style="color: white;">1) Hobyar, Ankara Cd. No:75/B, 34112 Fatih/İstanbul</p>
+                <p style="color: white;">2) Alemdar, Divanyolu Cd. No:64, 34110 Fatih/İstanbul</p>
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- YUKARI ÇIK BUTONU -->
+<button id="yukariCikBtn" class="lamas-up-float" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" title="Yukarı Çık">
+    <i class="fa-solid fa-chevron-up"></i>
+</button>
+
+<script src="script.js"></script>
+<!-- Google Translate Scriptleri Aktif Edildi -->
+<!-- Google Translate Scriptleri Aktif Edildi -->
+<div id="google_translate_element" style="display:none;"></div>
+</body>
+
+</html>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sipariş Özeti | Lamas Parfüm</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .summary-page { min-height: 70vh; display: flex; justify-content: center; padding: 50px 20px; background-color: #F6F1E8; }
+        .summary-card { background: #fff; width: 100%; max-width: 800px; padding: 50px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); text-align: center; }
+        .success-icon { font-size: 60px; color: #D4AF37; margin-bottom: 20px; }
+        .summary-title { font-size: 28px; color: #111; margin-bottom: 10px; font-family: serif; }
+        .tracking-badge { display: inline-block; background: #fdfaf2; border: 1px dashed #D4AF37; padding: 10px 25px; font-size: 18px; font-weight: bold; color: #111; margin: 20px 0; border-radius: 5px; }
+        .items-container { text-align: left; margin-top: 30px; border-top: 1px solid #eee; padding-top: 20px; }
+        .item-row { display: flex; align-items: center; gap: 15px; padding: 15px; border-bottom: 1px solid #fafafa; }
+        .item-row img { width: 60px; height: 60px; object-fit: cover; border-radius: 8px; }
+        .item-info { flex: 1; }
+        .item-info h4 { margin: 0 0 5px 0; font-size: 15px; color: #333; }
+        .item-info p { margin: 0; font-size: 13px; color: #777; }
+        .item-price { font-weight: bold; font-size: 15px; color: #111; }
+        .total-row { text-align: right; margin-top: 20px; font-size: 18px; font-weight: bold; color: #D4AF37; }
+        .guest-note { margin-top: 40px; padding: 15px; background: #fafafa; border-left: 4px solid #D4AF37; font-size: 13px; color: #555; text-align: left; line-height: 1.5; }
+    </style>
+</head>
+<body>
+
+<!-- BURAYA DİĞER SAYFALARDAN NAVBAR (HEADER) KOPYALANACAK -->
+
+<section class="summary-page">
+    <div class="summary-card">
+        <i class="fa-solid fa-circle-check success-icon"></i>
+        <h2 class="summary-title">Siparişiniz Başarıyla Alındı</h2>
+        <p style="color: #666;">Lamas Parfüm'ü tercih ettiğiniz için teşekkür ederiz. Siparişiniz hazırlanma aşamasına geçmiştir.</p>
+
+        <div class="tracking-badge">
+            Sipariş Takip Numaranız: <span id="siparisNoYazisi" style="color: #D4AF37;">Bekleniyor...</span>
+        </div>
+
+        <div class="items-container">
+            <h3 style="font-size: 18px; margin-bottom: 15px; color: #111;">Sipariş İçeriği</h3>
+            <div id="siparisUrunleri">
+                <p style="color: #999; font-size: 14px;">Ürünler yükleniyor...</p>
+            </div>
+            <div class="total-row">
+                Genel Toplam: <span id="genelToplam">0 TL</span>
+            </div>
+        </div>
+
+        <div class="guest-note">
+            <i class="fa-solid fa-circle-info" style="color: #D4AF37; margin-right: 5px;"></i>
+            <strong>Misafir Alışverişi Notu:</strong> Siparişinizi üye girişi yapmadan takip edebilmek için yukarıdaki sipariş numaranızı lütfen not alınız veya tarafınıza gönderilen e-postayı kontrol ediniz.
+        </div>
+
+        <div style="margin-top: 30px;">
+            <a href="/" style="background: #111; color: #fff; text-decoration: none; padding: 12px 30px; border-radius: 30px; font-weight: bold; transition: 0.3s; display: inline-block;" onmouseover="this.style.background='#D4AF37'" onmouseout="this.style.background='#111'">Alışverişe Dön</a>
+        </div>
+    </div>
+</section>
+
+<!-- BURAYA DİĞER SAYFALARDAN FOOTER KOPYALANACAK -->
+
+<script src="script.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        // Sepeti Temizle
+        localStorage.removeItem("lamasSepet");
+        localStorage.removeItem("lamasGeciciAdres");
+
+        let aktifKullanici = JSON.parse(localStorage.getItem("lamasGirisYapanKullanici"));
+        if (aktifKullanici && aktifKullanici.id) {
+            fetch("/api/cart/clear/" + aktifKullanici.id, { method: "DELETE" }).catch(err => console.log(err));
+        }
+
+        if(typeof window.sepetiEkranaCiz === "function") window.sepetiEkranaCiz();
+        if(typeof window.sepetSayaciniGuncelle === "function") window.sepetSayaciniGuncelle();
+
+        // URL'den takip numarasını al ve verileri çek
+        let urlParams = new URLSearchParams(window.location.search);
+        let siparisNo = urlParams.get("no");
+
+        if (!siparisNo) {
+            window.location.href = "/";
+            return;
+        }
+
+        document.getElementById("siparisNoYazisi").innerText = "#" + siparisNo;
+
+        fetch(`/api/orders/track/${siparisNo}`)
+            .then(res => {
+                if(!res.ok) throw new Error("Sipariş bulunamadı");
+                return res.json();
+            })
+            .then(order => {
+                let itemsList = document.getElementById("siparisUrunleri");
+                itemsList.innerHTML = "";
+
+                if (order.items && order.items.length > 0) {
+                    order.items.forEach(item => {
+                        let imgUrl = typeof window.kucukResimGetir === "function" ? window.kucukResimGetir(item.imgurl) : item.imgurl;
+
+                        itemsList.innerHTML += `
+                            <div class="item-row">
+                                <img src="${imgUrl}" onerror="this.onerror=null; this.src='${item.imgurl}';" alt="${item.title}">
+                                <div class="item-info">
+                                    <h4>${item.title}</h4>
+                                    <p>${item.size} | Adet: ${item.quantity}</p>
+                                </div>
+                                <div class="item-price">${(item.price * item.quantity).toLocaleString('tr-TR')} TL</div>
+                            </div>
+                        `;
+                    });
+                }
+
+                document.getElementById("genelToplam").innerText = order.totalAmount.toLocaleString('tr-TR') + " TL";
+            })
+            .catch(err => console.log("Hata:", err));
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Paneli - Lamas Parfüm</title>
+    <script>
+        // 🌟 GÜVENLİK BEKÇİSİ: Sayfa yüklenmeden önce kimliği kontrol eder
+        let patronKimligi = JSON.parse(localStorage.getItem("lamasGirisYapanKullanici"));
+
+        // Eğer giriş yapılmamışsa veya giren kişi admin değilse, anında anasayfaya fırlat!
+        if (!patronKimligi || patronKimligi.email !== "admin@lamasparfum.com") {
+            window.location.replace("index.html");
+        }
+    </script>
+    <!-- CSS dosyan ve FontAwesome İkonları -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* YUMUŞAK KAYDIRMA ÖZELLİĞİ */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* YENİ: SABİT HIZLI MENÜ (STICKY NAVBAR) */
+        .admin-nav {
+            position: sticky;
+            top: 0;
+            background-color: #1A1A1A;
+            padding: 15px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            z-index: 1000;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            border-bottom: 3px solid #D4AF37;
+        }
+        .admin-nav a {
+            color: #D4AF37;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 10px 20px;
+            border: 1px solid #D4AF37;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            font-family: 'Roboto', sans-serif;
+            font-size: 15px;
+        }
+        .admin-nav a:hover {
+            background-color: #D4AF37;
+            color: #1A1A1A;
+        }
+
+        /* Hedeflenen bölüm menünün altında kalmasın diye pay bırakıyoruz */
+        .bolum-hedefi {
+            scroll-margin-top: 100px;
+        }
+
+        /* MEVCUT TASARIMLARIN */
+        .admin-container {
+            max-width: 500px;
+            margin: 40px auto;
+            padding: 30px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            font-family: 'Roboto', sans-serif;
+            background: white;
+        }
+        #admin-siparis-listesi td {
+            word-break: break-word;
+            overflow-wrap: break-word;
+            max-width: 250px;
+        }
+        .form-grup { margin-bottom: 20px; }
+        .form-grup label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        .form-grup input, .form-grup select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        .admin-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #000;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .admin-btn:hover { background-color: #333; }
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        .admin-table th, .admin-table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+            vertical-align: middle;
+        }
+        .admin-table th { background-color: #f4f4f4; }
+        .admin-table img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+        .btn-sil { background-color: #dc3545; color: white; border: none; padding: 8px 12px; border-radius: 4px; cursor: pointer; }
+        .btn-duzenle { background-color: #007bff; color: white; border: none; padding: 8px 12px; border-radius: 4px; cursor: pointer; margin-right: 5px; }
+        .btn-sil:hover { background-color: #c82333; }
+        .btn-duzenle:hover { background-color: #0069d9; }
+        /* Gelen Mesajlar Tablosunun Tasarımını Sabitleme */
+#bolum-mesajlar table {
+    table-layout: fixed; /* Tablonun sütun genişliklerini sabitleer */
+    width: 100%;
+}
+
+#bolum-mesajlar td {
+    word-break: break-word;     /* Uzun kelimeleri ve metinleri alt satıra kaydırır */
+    overflow-wrap: break-word;  /* Taşan metinleri kutunun içine hapsetmek için alt satıra böler */
+    white-space: normal;        /* Metnin tek satırda uzayıp gitmesini engeller */
+}
+    </style>
+<link rel="icon" type="image/webp" href="photos/lamas-logo-1.webp"></head>
+<body style="background-color: #fcfcfc;">
+
+<!-- LOGO -->
+<div style="text-align: center; margin: 20px 0;">
+    <a href="/"><img src="photos/lamas-logo-1.webp" alt="Lamas Logo" width="100"></a>
+</div>
+
+<!-- SABİT YÖNLENDİRME MENÜSÜ -->
+<nav class="admin-nav">
+    <a href="#bolum-ozet"><i class="fa-solid fa-chart-line"></i> Kasa & Özet</a>
+    <a href="#bolum-siparisler"><i class="fa-solid fa-box-open"></i> Gelen Siparişler</a>
+    <a href="#bolum-urun-ekle"><i class="fa-solid fa-plus-circle"></i> Yeni Ürün Ekle</a>
+    <a href="#bolum-stok"><i class="fa-solid fa-cubes"></i> Stok (Mevcut Ürünler)</a>
+    <a href="#bolum-mesajlar"><i class="fa-solid fa-envelope"></i> Gelen Mesajlar</a>
+</nav>
+
+<!-- 1. PATRON ÖZET EKRANI (DASHBOARD) -->
+<div id="bolum-ozet" class="bolum-hedefi" style="display: flex; gap: 20px; max-width: 1200px; margin: 40px auto;">
+    <div style="background: #2c3e50; color: white; padding: 20px; border-radius: 10px; flex: 1; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+        <h3 style="margin: 0; font-size: 16px; color: #bdc3c7;">Toplam Ciro</h3>
+        <h2 id="toplam-ciro" style="margin: 10px 0 0 0; color: #D4AF37;">0 ₺</h2>
+    </div>
+    <div style="background: #2c3e50; color: white; padding: 20px; border-radius: 10px; flex: 1; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+        <h3 style="margin: 0; font-size: 16px; color: #bdc3c7;">Toplam Sipariş</h3>
+        <h2 id="toplam-siparis" style="margin: 10px 0 0 0; color: #D4AF37;">0</h2>
+    </div>
+    <div style="background: #2c3e50; color: white; padding: 20px; border-radius: 10px; flex: 1; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+        <h3 style="margin: 0; font-size: 16px; color: #bdc3c7;">Toplam Ürün</h3>
+        <h2 id="toplam-urun" style="margin: 10px 0 0 0; color: #D4AF37;">0</h2>
+    </div>
+</div>
+
+<!-- 2. GELEN SİPARİŞLER YÖNETİM PANELİ -->
+<section id="bolum-siparisler" class="bolum-hedefi" style="max-width: 1200px; margin: 50px auto; padding: 20px; font-family: sans-serif;">
+    <h2 style="font-family: serif; color: #333; border-bottom: 2px solid #D4AF37; padding-bottom: 10px;"><i class="fa-solid fa-truck-fast"></i> Gelen Siparişler Yönetimi</h2>
+
+    <div style="overflow-x: auto; margin-top: 20px;">
+        <table style="width: 100%; border-collapse: collapse; text-align: left; background: white; box-shadow: 0 5px 15px rgba(0,0,0,0.05); border-radius: 8px; overflow: hidden;">
+            <thead>
+            <tr style="background-color: #D4AF37; color: white;">
+                <th style="padding: 15px;">Sipariş No</th>
+                <th style="padding: 15px;">Müşteri & Tarih</th>
+                <th style="padding: 15px;">Teslimat Adresi</th>
+                <th style="padding: 15px;">Toplam Tutar</th>
+                <th style="padding: 15px;">Sipariş Durumu</th>
+            </tr>
+            </thead>
+            <tbody id="admin-siparis-listesi">
+            <!-- JS Burayı Otomatik Dolduracak -->
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<!-- 3. YENİ ÜRÜN EKLEME -->
+<div id="bolum-urun-ekle" class="admin-container bolum-hedefi">
+    <h2 style="text-align: center; margin-bottom: 30px;"><i class="fa-solid fa-spray-can-sparkles"></i> Yeni Ürün Ekle</h2>
+
+    <form id="urun-ekleme-formu">
+        <div class="form-grup">
+            <label>Ürün Adı:</label>
+            <input type="text" id="isim" placeholder="Örn: Lamas Green" required>
+        </div>
+        <div class="form-grup">
+            <label>Üst Notalar (Top Notes):</label>
+            <input type="text" id="ust-nota" placeholder="Örn: Bergamot, Limon, Elma">
+        </div>
+        <div class="form-grup">
+            <label>Orta Notalar (Middle Notes):</label>
+            <input type="text" id="orta-nota" placeholder="Örn: Yasemin, Gül, Lavanta">
+        </div>
+        <div class="form-grup">
+            <label>Alt Notalar (Base Notes):</label>
+            <input type="text" id="alt-nota" placeholder="Örn: Amber, Misk, Sedir Ağacı">
+        </div>
+
+        <div class="form-grup">
+            <label>Açıklama:</label>
+            <input type="text" id="aciklama" placeholder="Ürün hakkında kısa bilgi..." required>
+        </div>
+
+        <div class="form-grup">
+            <label>Cinsiyet Türü:</label>
+            <select id="cinsiyet" style="width: 100%; padding: 10px; margin-bottom: 15px; border-radius: 5px;">
+                <option value="Kadın">Kadın Parfümü</option>
+                <option value="Erkek">Erkek Parfümü</option>
+                <option value="Unisex">Unisex</option>
+            </select>
+        </div>
+
+        <div class="form-grup">
+            <label>Boyut Fiyatları (Virgülle ayırın, örn: 600, 1000):</label>
+            <input type="text" id="beden-fiyatlari" placeholder="600, 1000" required>
+        </div>
+
+        <div class="form-grup">
+            <label>Stok Adedi:</label>
+            <input type="number" id="stok" placeholder="Örn: 50" required>
+        </div>
+
+        <div class="form-grup">
+            <label>Kategori:</label>
+            <select id="kategori">
+                <option value="Colors">Colors</option>
+                <option value="Mix">Mix</option>
+                <option value="Oda Kokusu">Oda Kokusu</option>
+                <option value="Vucut Spreyi">Vücut Spreyi</option>
+                <option value="Oda Spreyi">Oda Spreyi</option>
+                <option value="Muadil">Muadil</option>
+                <option value="Deodorant">Deodorant</option>
+            </select>
+        </div>
+
+        <div class="form-grup">
+            <label><i class="fa-regular fa-image"></i> Ana Fotoğraf Seç:</label>
+            <input type="file" id="resim-yolu" accept="image/*" required style="padding: 8px; background: #f8f9fa; cursor: pointer;">
+
+            <label for="ikinci-resim-yolu" style="margin-top:10px;"><i class="fa-solid fa-image"></i> İkinci / Özel Resim Seç:</label>
+            <input type="file" id="ikinci-resim-yolu" accept="image/*" style="padding: 8px; background: #f8f9fa; cursor: pointer;">
+
+            <label for="video-yolu" style="margin-top:10px;"><i class="fa-solid fa-video"></i> Video Seç (Vitrin İçin):</label>
+            <input type="file" id="video-yolu" accept="video/*" style="padding: 8px; background: #f8f9fa; cursor: pointer;">
+
+            <!-- Ürün düzenlerken eski resmin yolunu hafızada tutmak için gizli inputlar -->
+            <input type="hidden" id="eski-resim-yolu">
+            <input type="hidden" id="eski-ikinci-resim-yolu">
+            <input type="hidden" id="eski-video-yolu">
+        </div>
+
+        <div style="margin-bottom: 10px;">
+            <label for="boyutlar">Ürün Boyutları (Virgülle ayırın):</label><br>
+            <input type="text" id="boyutlar" placeholder="Örn: 50ML,100ML,120ML" style="width: 100%; padding: 5px;">
+        </div>
+        <button type="submit" class="admin-btn">Ürünü Kaydet</button>
+    </form>
+</div>
+
+<!-- 4. MEVCUT ÜRÜNLER LİSTESİ (STOK) -->
+<div id="bolum-stok" class="admin-container bolum-hedefi" style="max-width: 800px; margin-top: 40px; margin-bottom: 100px;">
+    <h2 style="text-align: center; margin-bottom: 20px;"><i class="fa-solid fa-boxes-stacked"></i> Mevcut Ürünler (Stok)</h2>
+
+    <!-- CANLI ÜRÜN ARAMA FİLTRESİ -->
+    <div style="margin-bottom: 20px;">
+        <input type="text" id="admin-urun-ara" onkeyup="adminUrunFiltrele()" placeholder="🔍 Ürün adına veya kategorisine göre ara..." style="width: 100%; padding: 15px; border: 2px solid #ddd; border-radius: 8px; font-size: 16px; outline: none; transition: 0.3s;">
+    </div>
+
+    <table class="admin-table">
+        <thead>
+        <tr>
+            <th>Resim</th>
+            <th>Ürün Adı</th>
+            <th>Kategori</th>
+            <th>Fiyat</th>
+            <th>Stok</th>
+            <th>İşlemler</th>
+        </tr>
+        </thead>
+        <tbody id="admin-urun-listesi">
+        <!-- JS Burayı Otomatik Dolduracak -->
+        </tbody>
+    </table>
+</div>
+
+<!-- 5. GELEN MESAJLAR (İLETİŞİM FORMU) -->
+<div id="bolum-mesajlar" class="admin-container bolum-hedefi" style="max-width: 1000px; margin-top: 40px; margin-bottom: 100px;">
+    <h2 style="text-align: center; margin-bottom: 20px;"><i class="fa-solid fa-envelope"></i> Gelen İletişim Mesajları</h2>
+
+    <table class="admin-table">
+        <thead>
+        <tr>
+            <th>Gönderen</th>
+            <th>E-posta</th>
+            <th>Konu</th>
+            <th style="width: 40%;">Mesaj</th>
+        </tr>
+        </thead>
+        <tbody id="admin-mesaj-listesi">
+        <!-- JS Burayı Otomatik Dolduracak -->
+        </tbody>
+    </table>
+</div>
+
+<!-- En altta JavaScript kuryemizi çağırıyoruz -->
+<script src="script.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jsbarcode/3.11.5/JsBarcode.all.min.js"></script>
+<!-- YUKARI ÇIK BUTONU -->
+<button id="yukariCikBtn" class="lamas-up-float" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" title="Yukarı Çık">
+    <i class="fa-solid fa-chevron-up"></i>
+</button></body>
+</html>

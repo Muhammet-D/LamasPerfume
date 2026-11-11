@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giriş Seçenekleri | Lamas Parfüm</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.0/css/all.min.css"
+          integrity="sha512-ApSLB1Pd3/bZN8fWB/RG9YhN/7bd9Hkf3AGaE2mPfebjrxagjuBtx2GcgdqIlJkUzwylBo61r9Xa9NmgBI0swA=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="icon" type="image/webp" href="photos/lamas-logo-1.webp"></head>
+
+<body>
+
+<header>
+  <nav class="nav-bar">
+
+    <!-- 1. SOL: Logo -->
+    <div class="lamas-logo-div">
+        <a href="/"><img src="photos/lamas-logo-1.webp" alt="Lamas Logo" class="lamas-logo"></a>
+        <a href="/"><img src="photos/lamas-yazi.webp" alt="Lamas Yazı" class="lamas-yazi"></a>
+    </div>
+
+    <!-- 2. ORTA: Menü Linkleri -->
+    <ul class="nav-bar-ul" id="mobilMenuListesi">
+        <li><a href="/" class="nav-bar-a">Anasayfa</a></li>
+        <span for="" class="navbar-cizgi"></span>
+
+        <li class="dropdown">
+            <a href="kategori.html" class="nav-bar-a">Kategoriler <i class="fa-solid fa-arrow-down" style="font-size: 11px;"></i></a>
+            <ul class="dropdown-menu">
+                <li><a href="renk.html">Renk Serisi</a></li>
+                <li><a href="mix.html">Lamas Mix - Unisex</a></li>
+                <li><a href="deodorant.html">Deodorantlar</a></li>
+                <li><a href="erkek-kadin.html?cinsiyet=Kadın">Kadın Parfümleri</a></li>
+                <li><a href="erkek-kadin.html?cinsiyet=Erkek">Erkek Parfümleri</a></li>
+                <li><a href="vucut.html">Vücut Spreyleri</a></li>
+                <li><a href="koleksiyon.html?filtre=yeni">Yeni Gelenler</a></li>
+
+                <li class="dropdown-submenu">
+                    <a href="oda-kokulari.html">Oda kokuları <i class="fa-solid fa-caret-right" style="float: right; margin-top: 4px;"></i></a>
+                    <ul class="dropdown-menu sub-menu">
+                        <li><a href="cubuk.html">Çubuklu Oda Kokusu</a></li>
+                        <li><a href="sprey.html">Oda Spreyi</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+
+        <span for="" class="navbar-cizgi"></span>
+        <li><a href="koleksiyon.html?filtre=populer" class="nav-bar-a">Çok Satanlar</a></li>
+        <span for="" class="navbar-cizgi"></span>
+        <li><a href="kargotakip.html" class="nav-bar-a">Sipariş Takibi</a></li>
+        <span for="" class="navbar-cizgi"></span>
+        <li><a href="iletisim.html" class="nav-bar-a">İletişim</a></li>
+
+        <!-- MOBİLDE GÖRÜNECEK DİL SEÇİCİ -->
+        <li class="mobil-dil">
+            <div class="dil-secici notranslate" style="padding-left: 20px;">
+                <button onclick="dilDegistir('tr')" class="dil-btn">TR</button>
+                <span class="dil-ayrac">|</span>
+                <button onclick="dilDegistir('en')" class="dil-btn">EN</button>
+            </div>
+        </li>
+    </ul>
+
+    <!-- 3. SAĞ: İkonlar ve Hamburger Menü -->
+    <div class="nav-sag-ikonlar">
+
+        <!-- Arama -->
+        <div class="arama-kapsayici" style="position: relative;">
+            <a href="#" class="nav-bar-a" onclick="window.aramaKutusunuAc(event)">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </a>
+
+            <div id="aramaKutusu" class="arama-kutusu-gizli">
+                <input type="text" id="aramaInput" placeholder="Parfüm, nota veya kategori ara..." onkeyup="window.canliUrunAra()">
+                <div id="aramaSonuclari" class="arama-sonuclari-liste"></div>
+            </div>
+        </div>
+
+        <!-- Favoriler -->
+        <a href="favori.html" class="nav-bar-a" title="Favorilerim">
+            <i class="fa-solid fa-heart"></i>
+        </a>
+
+        <!-- Sepet -->
+        <a href="sepet.html" class="nav-bar-a" style="position: relative;">
+            <i class="fa-solid fa-cart-shopping"></i>
+            <span id="nav-sepet-sayaci" class="sepet-sayaci-stil">0</span>
+        </a>
+
+        <!-- Kullanıcı -->
+        <a href="giris.html" class="nav-bar-a" id="userIconLink"><i class="fa-solid fa-user"></i></a>
+
+        <!-- MASAÜSTÜNDE GÖRÜNECEK DİL SEÇİCİ -->
+        <div class="dil-secici notranslate masaustu-dil">
+            <button onclick="dilDegistir('tr')" class="dil-btn">TR</button>
+            <span class="dil-ayrac">|</span>
+            <button onclick="dilDegistir('en')" class="dil-btn">EN</button>
+        </div>
+
+        <!-- Üç Çizgi İkonu -->
+        <i class="fa-solid fa-bars hamburger-btn" onclick="mobilMenuTetikle()"></i>
+    </div>
+
+</nav>
+</header>
+<!-- SEÇİM EKRANI BÖLÜMÜ -->
+<section style="    background-color: #F6F1E8;
+ padding-bottom: 50px;">
+
+    <div style="text-align: center; padding-top: 50px;">
+        <h1 style="font-family: serif; color: #333;">Güvenli Ödeme Adımı</h1>
+        <p style="color: #777; margin-top: 10px;">İşleme devam etmek için lütfen bir seçenek belirleyin.</p>
+    </div>
+
+    <div class="gateway-container">
+
+        <!-- SOL: Üye Girişi -->
+        <div class="gateway-box">
+            <div>
+                <h2 class="gateway-title">Kayıtlı Müşteriyim</h2>
+                <p class="gateway-desc">Lamas hesabınıza giriş yaparak kayıtlı adreslerinizle hızlıca ve güvenle alışverişinizi tamamlayın.</p>
+
+                <form id="checkoutLoginForm">
+                    <div class="input-group">
+                        <label for="email">E-posta Adresi</label>
+                        <input type="email" id="email" placeholder="ornek@mail.com" required>
+                    </div>
+
+                    <div class="input-group" style="margin-top: 15px;">
+                        <label for="password">Şifre</label>
+                        <div class="password-wrapper">
+                            <input type="password" id="password" placeholder="••••••••" required>
+                        </div>
+                    </div>
+
+                    <a href="#" style="display: block; text-align: right; font-size: 13px; color: #777; margin-top: 10px; text-decoration: none;">Şifremi Unuttum</a>
+
+                    <button type="submit" class="gateway-btn" style="margin-top: 25px;">Giriş Yap ve Devam Et</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- SAĞ: Misafir & Kayıt -->
+        <div class="gateway-box guest-box">
+            <div>
+                <h2 class="gateway-title">Yeni Müşteriyim</h2>
+                <p class="gateway-desc">Hesap oluşturarak siparişlerinizi kolayca takip edebilir, kampanyalardan faydalanabilirsiniz. Dilerseniz üye olmadan da devam edebilirsiniz.</p>
+
+                <!-- Misafir Olarak Devam Et (Direkt adres.html'e atar) -->
+                <button onclick="window.location.href='adres.html'" class="gateway-btn">Misafir Olarak Devam Et</button>
+
+                <div class="or-divider">VEYA</div>
+
+                <!-- Kayıt Ol (kaydol.html'e atar) -->
+                <button onclick="window.location.href='kaydol.html'" class="gateway-btn gateway-btn-outline">Yeni Hesap Oluştur</button>
+            </div>
+
+            <p style="font-size: 12px; color: #888; text-align: center; margin-top: 30px;">
+                <i class="fa-solid fa-shield-halved"></i> 256-Bit SSL ile güvenli alışveriş.
+            </p>
+        </div>
+
+    </div>
+</section>
+
+<script src="script.js"></script>
+<!-- Google Translate Scriptleri Aktif Edildi -->
+<!-- Google Translate Scriptleri Aktif Edildi -->
+<div id="google_translate_element" style="display:none;"></div>
+
+
+
+
+<!-- YUKARI ÇIK BUTONU -->
+<button id="yukariCikBtn" class="lamas-up-float" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" title="Yukarı Çık">
+    <i class="fa-solid fa-chevron-up"></i>
+</button>
+
+<!-- GÜVENLİ ÖDEME EKRANI: GİRİŞ YAP VE DEVAM ET MOTORU -->
+<script>
+    document.getElementById("checkoutLoginForm").addEventListener("submit", async function(e) {
+        e.preventDefault(); // Sayfanın yenilenmesini engeller
+
+        const email = document.getElementById("email").value.trim();
+        const password = document.getElementById("password").value;
+        const btn = this.querySelector("button[type='submit']");
+
+        // Çift tıklamayı önlemek için butonu kilitliyoruz
+        btn.disabled = true;
+        btn.innerText = "Giriş yapılıyor...";
+
+        try {
+            // 1. Java (Backend) tarafına giriş bilgilerini gönder
+            let response = await fetch("/api/users/login", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email: email, password: password })
+            });
+
+            let result = await response.text();
+
+            if (response.ok) {
+                // Giriş Başarılı!
+                let user = JSON.parse(result);
+                localStorage.setItem("lamasGirisYapanKullanici", JSON.stringify(user));
+
+                // 2. MİSAFİR SEPETİNİ ÜYE SEPETİNE AKTARMA (SİHİRLİ KISIM BURASI)
+                let yerelSepet = JSON.parse(localStorage.getItem("lamasSepet")) || [];
+
+                if (yerelSepet.length > 0) {
+                    btn.innerText = "Sepetiniz hesaba aktarılıyor...";
+
+                    // Sepetteki her ürünü tek tek kullanıcının DB sepetine yolla
+                    for (let item of yerelSepet) {
+                        let gonderilecekUrun = {
+                            userId: user.id,
+                            productId: parseInt(item.id),
+                            title: item.title,
+                            size: item.size,
+                            price: parseFloat(item.price),
+                            quantity: parseInt(item.quantity),
+                            imgurl: item.img || item.imgurl
+                        };
+
+                        try {
+                            await fetch("/api/cart/add", {
+                                method: "POST",
+                                headers: { "Content-Type": "application/json" },
+                                body: JSON.stringify(gonderilecekUrun)
+                            });
+                        } catch (err) {
+                            console.error("Sepet aktarma hatası:", err);
+                        }
+                    }
+                }
+
+                // 3. Her şey bitti, adres sayfasına yönlendir
+                window.lamasBildirim("Giriş başarılı! Ödeme adımına aktarılıyorsunuz...", "basarili");
+                setTimeout(() => { window.location.href = "adres.html"; }, 1500);
+            }
+            else {
+                // Şifre yanlışsa butonu geri aç
+                window.lamasBildirim(result, "hata");
+                btn.disabled = false;
+                btn.innerText = "Giriş Yap ve Devam Et";
+            }
+        } catch (error) {
+            // Sunucu çöktüyse butonu geri aç
+            window.lamasBildirim("Sunucu bağlantı hatası!", "hata");
+            btn.disabled = false;
+            btn.innerText = "Giriş Yap ve Devam Et";
+        }
+    });
+</script>
+</body>
+</html>
